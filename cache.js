@@ -48,7 +48,7 @@ var Cache = {
                 return cache.put(request, new Response(file))
                     .then(() => {
                         // Add this file's metadata to the global list.
-                        return Cache.update("metadata", "/api/v1/metadata/all", (content) => {
+                        return Cache.update("metadata", "/sw-filemanager/api/v1/metadata/all", (content) => {
                             if (!content || !Array.isArray(content)) {
                                 content = [];
                             }
