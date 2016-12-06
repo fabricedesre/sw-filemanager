@@ -21,7 +21,7 @@ function fc_on_change(e) {
 function update() {
   // Fetch the meta data to populate the UI.
   console.log(`[index] about to fetch metadata for ${app}`);
-  fetch("/api/v1/metadata/all")
+  fetch("/sw-filemanager/api/v1/metadata/all")
     .then((response) => { return response.json(); })
     .then((data) => {
       app.set({ files: data });
