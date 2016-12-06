@@ -13,6 +13,7 @@ this.addEventListener("fetch", function (event) {
 
     // Make sure we only look for our file urls in the cache.
     let url = new URL(event.request.url);
+    console.log(`[sw] path=${url.pathname}`);
     if (!url.pathname.startsWith("/sw-filemanager/api/v1/")) {
         console.error(`[sw] not intercepting ${url.pathname}`);
         return;
