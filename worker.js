@@ -9,7 +9,7 @@ console.log("[worker] Worker Started");
 onmessage = (event) => {
     let file = event.data;
     console.log(`[worker] adding ${file.name} ${file.type} ${file.size}`);
-    let name = "/api/v1/fs/" + file.name;
+    let name = "/sw-filemanager/api/v1/fs/" + file.name;
     let url = new URL(name, location);
     let meta_data = { name: file.name, type: file.type, size: file.size, url: url.href };
     // Add the file to the cache. The cache also takes care of maintaining the meta data.
