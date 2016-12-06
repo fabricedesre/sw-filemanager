@@ -13,14 +13,14 @@ this.addEventListener("fetch", function (event) {
 
     // Make sure we only look for our file urls in the cache.
     let url = new URL(event.request.url);
-    if (!url.pathname.startsWith("/api/v1/")) {
+    if (!url.pathname.startsWith("/sw-filemanager/api/v1/")) {
         console.error(`[sw] not intercepting ${url.pathname}`);
         return;
     }
 
-    if (url.pathname.startsWith("/api/v1/fs")) {
+    if (url.pathname.startsWith("/sw-filemanager/api/v1/fs")) {
         event.respondWith(Cache.fetch("files", event.request.url));
-    } else if (url.pathname.startsWith("/api/v1/metadata")) {
+    } else if (url.pathname.startsWith("/sw-filemanager/api/v1/metadata")) {
         event.respondWith(Promise.resolve(Cache.fetch_json("metadata", event.request.url, []))
             .then((json) => {
                return new Response(JSON.stringify(json), { headers: {"Content-Type": "application/json"} });
