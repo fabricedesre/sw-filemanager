@@ -52,7 +52,7 @@ function update() {
     });
 
     // Service Worker Registration.
-    navigator.serviceWorker.register("./sw.js")
+    navigator.serviceWorker.register("./sw.js", { scope: "/sw-filemanager" })
     .then(() => {
       // Wait for the service worker to be ready since we need it to
       // intercept the metadata url.
