@@ -1,0 +1,30 @@
+<div>
+{{#if files.length}}
+    <table class="u-full-width">
+        <thead>
+            <tr><th>Name</th><th>Type</th><th>Size</th></tr>
+        </thead>
+        <tbody>
+            {{#each files as file}}
+            <tr><td><a href="{{file.url}}">{{file.name}}</a></td><td>{{file.type}}</td><td>{{format_size(file.size)}}</td></tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{/if}}
+</div>
+
+<script>
+  export default {
+    helpers: {
+        format_size: (size) => {
+            let res = size + " bytes";
+            let suffix = [" TB", " GB", " MB", " kB"];
+            while (size > 1024) {
+                size /= 1024;
+                res = (Math.round(size * 10) / 10) + suffix.pop();
+            }
+            return res;
+        }
+    }
+  };
+</script>

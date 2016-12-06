@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Remote File Manager</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="Skeleton-2.0.4css/normalize.css">
+  <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+  <script src='cache.js'></script>
+  <script src='FileTable.js'></script>
+  <script>
+function get_file() {
+  document.getElementById("file-chooser").click();
+}
+
+function fc_on_change(e) {
+  worker.postMessage(e.target.files[0]);
+}
+
+function update() {
+  // Fetch the meta data to populate the UI.
+  console.log(`[index] about to fetch metadata for ${app}`);
+  fetch("/api/v1/metadata/all")
+    .then((response) => { return response.json(); })
+    .then((data) => {
+      app.set({ files: data });
+    });
+}
+  </script>
+</head>
+
+<body>
+  <div class="container u-full-width">
+    <h4>Remote File Manager</h4>
+    <div class="row">
+      <input placeholder="Choose File" id="file-chooser" type="file" hidden onchange="fc_on_change(event)">
+      <button class="button-primary" onclick="get_file()">Add File</button>
+      <!-- <button class="button-primary" onclick="update()">Force Update</button> -->
+    </div>
+    <div id="file-container">
+    </div>
+  </div>
+  <script>
+
+    // UI setup.
+    var app = new FileTable({
+      target: document.querySelector("#file-container"),
+      data: {
+        files: []
+      }
+    });
+
+    // Service Worker Registration.
+    navigator.serviceWorker.register("./sw.js", { scope: "/" })
+    .then(() => {
+      // Wait for the service worker to be ready since we need it to
+      // intercept the metadata url.
+      update();
+    });
+
+    // Worker communication.
+    var worker = new Worker("./worker.js");
+    worker.onmessage = (event) => {
+      // The worker notifies us after adding a file. Delegate to update()
+      // the real work.
+      update();
+    }
+
+  </script>
+</body>
+
+</html>
