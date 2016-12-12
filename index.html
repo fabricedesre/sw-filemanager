@@ -5,7 +5,7 @@
   <title>Remote File Manager</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="Skeleton-2.0.4css/normalize.css">
+  <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
   <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
   <script src='cache.js'></script>
   <script src='FileTable.js'></script>
@@ -57,7 +57,8 @@ function update() {
       // Wait for the service worker to be ready since we need it to
       // intercept the metadata url.
       update();
-    });
+    })
+    .catch(console.error);
 
     // Worker communication.
     var worker = new Worker("./worker.js");
