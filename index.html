@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css">
   <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+  <script src="lib/objectencoder.js"> </script>
+  <script src="lib/remoteworkers.js"> </script>
   <script src='cache.js'></script>
   <script src='FileTable.js'></script>
   <script>
@@ -42,6 +44,8 @@ function update() {
     </div>
   </div>
   <script>
+    // Start as soon as possible since that triggers asynchronous discovery.
+    FoxboxWorkers.use_remote(true);
 
     // UI setup.
     var app = new FileTable({
@@ -52,8 +56,9 @@ function update() {
     });
 
     // Service Worker Registration.
-    navigator.serviceWorker.register("./sw.js", { scope: "/sw-filemanager/" })
+    FoxboxWorkers.RegisterServiceWorker.serviceWorker.register("./sw.js", { scope: "/sw-filemanager/" })
     .then(() => {
+      console.log("Service Worker registered.");
       // Wait for the service worker to be ready since we need it to
       // intercept the metadata url.
       update();
