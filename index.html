@@ -66,7 +66,7 @@ function update() {
     .catch(console.error);
 
     // Worker communication.
-    var worker = new Worker("./worker.js");
+    var worker = FoxboxWorkers.Worker("./worker.js");
     worker.onmessage = (event) => {
       // The worker notifies us after adding a file. Delegate to update()
       // the real work.
