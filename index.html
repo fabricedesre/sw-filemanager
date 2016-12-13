@@ -56,7 +56,7 @@ function update() {
     });
 
     // Service Worker Registration.
-    FoxboxWorkers.RegisterServiceWorker.serviceWorker.register("./sw.js", { scope: "/sw-filemanager/" })
+    FoxboxWorkers.RegisterServiceWorker("./sw.js", { scope: "/sw-filemanager/" })
     .then(() => {
       console.log("Service Worker registered.");
       // Wait for the service worker to be ready since we need it to
